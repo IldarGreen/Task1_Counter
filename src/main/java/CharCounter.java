@@ -13,12 +13,15 @@ public class CharCounter {
 		Map<Character, Integer> charMap = new HashMap<>();
 
 		try {
-			Scanner in = new Scanner(file);
-			while (in.hasNext()) {
-				String inputString = in.nextLine().toLowerCase();
-				inputString = inputString.replaceAll("[^a-z]", "");
-				char[] strArray = inputString.toCharArray();
-				for (char c : strArray) {
+			Scanner scanner = new Scanner(file);
+
+			while (scanner.hasNext()) {
+				//Переводим в нижний регистр и оставляем только буквы
+				String inputString = scanner.nextLine().toLowerCase().replaceAll("[^a-zа-я]", "");
+
+				char[] charArray = inputString.toCharArray();
+
+				for (char c : charArray) {
 					if (charMap.containsKey(c)) {
 						charMap.put(c, charMap.get(c) + 1); //Если буква уже есть то добавляем 1
 					} else {
@@ -33,6 +36,7 @@ public class CharCounter {
 							(e1, e2) -> e1, LinkedHashMap::new));
 
 			System.out.println(sortedCharMap);
+
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
