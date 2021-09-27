@@ -10,13 +10,13 @@ public class CharCounter {
 
 		File file = new File("src/main/resources/input.txt");
 
-		Map<Character, Integer> charMap = new HashMap<Character, Integer>();
+		Map<Character, Integer> charMap = new HashMap<>();
 
 		try {
 			Scanner in = new Scanner(file);
 			while (in.hasNext()) {
 				String inputString = in.nextLine().toLowerCase();
-				inputString = inputString.replace(" ", "");
+				inputString = inputString.replaceAll("[^a-z]", "");
 				char[] strArray = inputString.toCharArray();
 				for (char c : strArray) {
 					if (charMap.containsKey(c)) {
