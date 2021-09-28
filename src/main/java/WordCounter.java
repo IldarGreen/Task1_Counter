@@ -1,8 +1,4 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FilenameFilter;
-import java.io.PrintWriter;
-import java.nio.file.StandardOpenOption;
+import java.io.*;
 import java.util.Scanner;
 
 public class WordCounter {
@@ -25,8 +21,8 @@ public class WordCounter {
 			System.out.println(dir + " не содержит файлов с расширением " + ext);
 		} else {
 			for (File f : listFiles) {
-				System.out.println("Файл: " + dir + "/" + f.getName());
-				System.out.println(countWords(f));
+//				System.out.println("Файл: " + dir + "/" + f.getName());
+//				System.out.println(countWords(f));
 
 				writeToFile(f);
 			}
@@ -39,13 +35,16 @@ public class WordCounter {
 		int counter = 0;
 		try {
 			scanner = new Scanner(f);
+
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
 
 		while (scanner.hasNextLine()) {
 			String input = scanner.nextLine();
-			counter += input.trim().split("\\s+").length;
+
+			if (input.length() != 0)
+				counter += input.trim().split("\\P{L}+").length;
 		}
 		return counter;
 	}
@@ -53,18 +52,19 @@ public class WordCounter {
 	// Метод запись в файл результатов подсчета слов
 	private static void writeToFile(File f) {
 		File file = new File("src/main/resources/OUT/ResultOfCountingWords.txt");
-		PrintWriter printWriter = null;
+		FileWriter fileWriter = null;
 		try {
-			printWriter = new PrintWriter(file);
-		} catch (FileNotFoundException e) {
+			fileWriter = new FileWriter(file, true);
+
+			fileWriter.write(f.getName() + " : количество слов " + countWords(f) + "\n");
+
+			fileWriter.close();
+
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		printWriter.write("test row " + countWords(f));
-
-		printWriter.write("the text");
-
-		printWriter.close();
 	}
+
 
 	// Реализация интерфейса FileNameFilter
 	public static class MyFileNameFilter implements FilenameFilter {
