@@ -37,6 +37,8 @@ public class CharCounter {
 
 			System.out.println(sortedCharMap);
 
+			scanner.close();
+
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
