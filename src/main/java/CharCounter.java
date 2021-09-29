@@ -7,10 +7,7 @@ import java.util.stream.Collectors;
 
 public class CharCounter {
 	public static void main(String[] args) {
-		String separator = File.separator;
-		String path = "src" + separator + "main" + separator + "resources"
-				+ separator + "input.txt";
-		File file = new File(path);
+		File file = new File("src/main/resources/input.txt");
 
 		Map<Character, Integer> charMap = new HashMap<>();
 
